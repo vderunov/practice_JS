@@ -1,1 +1,1 @@
-# practice_JS
+# Hillel_5 JS Volodymyr Derunov homework
