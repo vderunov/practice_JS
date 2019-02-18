@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>HW_10</title>
+  </head>
+
+  <body>
+    <script>
+      /* Есть база данных студентов, в которой хранится информация о дате поступления 
+в ВУЗ и дате окончания (или отчисления).
+
+1. Необходимо написать функцию, которая принимает два параметра (дата 
+поступления и дата окончания) и возвращает список студентов, соответствующих 
+данному периоду обучения.
+2. Необходимо написать функцию, которая принимает начальную и конечную даты
+и возвращает период в который было максимальное кол-во студентов учащихся 
+в ВУЗе. */
+
+      var baseOfStudents = [
+        {
+          name: "Vasya",
+          yearStart: 2001,
+          yearEnd: 2005
+        },
+        {
+          name: "Dima",
+          yearStart: 2001,
+          yearEnd: 2003
+        },
+        {
+          name: "Anton",
+          yearStart: 2003,
+          yearEnd: 2003
+        },
+        {
+          name: "Sveta",
+          yearStart: 2006,
+          yearEnd: 2006
+        },
+        {
+          name: "Petya",
+          yearStart: 2004,
+          yearEnd: 2004
+        },
+        {
+          name: "Masha",
+          yearStart: 2004,
+          yearEnd: 2004
+        },
+        {
+          name: "Artur",
+          yearStart: 2003,
+          yearEnd: 2004
+        },
+        {
+          name: "Vadik",
+          yearStart: 2003,
+          yearEnd: 2006
+        },
+        {
+          name: "Kolya",
+          yearStart: 2002,
+          yearEnd: 2006
+        },
+        {
+          name: "Sergey",
+          yearStart: 2001,
+          yearEnd: 2005
+        }
+      ];
+
+      let getListOfStudents = (startDate, finishDate) => {
+        var arrNameYearStart = [];
+
+        for (var i = 0; i < baseOfStudents.length; i++) {
+          if (
+            baseOfStudents[i].yearStart <= startDate ||
+            baseOfStudents[i].yearStart <= finishDate ||
+            baseOfStudents[i].yearEnd <= startDate ||
+            baseOfStudents[i].yearEnd <= finishDate
+          ) {
+            arrNameYearStart[i] = baseOfStudents[i].name;
+          }
+        }
+
+        var arrListOfStudents = arrNameYearStart.filter(function(item) {
+          return item !== undefined;
+        });
+        return console.log(arrListOfStudents);
+      };
+
+      getListOfStudents(2000, 2005);
+
+      // PART 2
+
+      let getMaxStudents = (fromDate, endDate) => {
+        var arrList = [];
+        var counter = 0;
+
+        if (fromDate > endDate) {
+          return alert(`Не верно введен период!`);
+        }
+
+        var a = 0;
+
+        for (var i = fromDate; i <= endDate; i++) {
+          arrList[a] = {
+            year: i,
+            counter: 0,
+            students: []
+          };
+
+          for (var k = 0; k < baseOfStudents.length; k++) {
+            if (baseOfStudents[k].yearStart <= i) {
+              if (i > baseOfStudents[k].yearEnd) continue;
+
+              arrList[a].students.push(baseOfStudents[k].name);
+              arrList[a].counter++;
+            }
+          }
+          a++;
+        }
+
+        var maxStud = 0;
+
+        for (var j = 0; j <= arrList.length - 1; j++) {
+          if (maxStud < arrList[j].counter) {
+            maxStud = arrList[j].counter;
+          }
+        }
+
+        var arrMaxStudList = [];
+        var t = 0;
+
+        for (var j = 0; j <= arrList.length - 1; j++) {
+          if (maxStud == arrList[j].counter) {
+            arrMaxStudList[t] = arrList[j];
+            t++;
+          }
+        }
+        return console.log(arrMaxStudList);
+      };
+
+      getMaxStudents(2000, 2005);
+    </script>
+  </body>
+</html>
